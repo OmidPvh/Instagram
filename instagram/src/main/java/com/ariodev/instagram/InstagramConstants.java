@@ -1,9 +1,11 @@
 package com.ariodev.instagram;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.WindowManager;
 
 import static android.os.Build.MANUFACTURER;
 
@@ -37,8 +39,7 @@ public class InstagramConstants
     public static String getUserAgent()
     {
 
-        Display defaultDisplay = Instagram.context.getWindowManager()
-                                                  .getDefaultDisplay();
+        Display defaultDisplay = ((WindowManager) Instagram.context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         defaultDisplay.getMetrics(displayMetrics);

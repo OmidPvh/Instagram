@@ -1,6 +1,5 @@
 package com.ariodev.instagram;
 
-import android.app.Activity;
 import android.content.Context;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -43,7 +42,7 @@ public class Instagram
 {
 
 
-    public static Activity context;
+    public static Context context;
 
     @Getter
     protected String deviceId;
@@ -85,18 +84,19 @@ public class Instagram
 
     /**
      * Input this parameter carefully
+     *
      * @param username -> instagram username
      * @param password -> instagram password
-     * @param activity -> activity you want to login.
+     * @param context -> context you want to login.
      */
 
     @Builder
-    public Instagram(String username, String password, Activity activity)
+    public Instagram(String username, String password, Context context)
     {
         super();
         this.username = username;
         this.password = password;
-        this.context = activity;
+        this.context = context;
     }
 
 
