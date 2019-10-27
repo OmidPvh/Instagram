@@ -60,9 +60,11 @@ public class Instagram
     private String accessToken;
 
     @Getter
+    @Setter
     protected boolean isLoggedIn;
 
     @Getter
+    @Setter
     private String uuid;
 
     @Getter
@@ -78,6 +80,7 @@ public class Instagram
     protected Response lastResponse;
 
     @Getter
+    @Setter
     protected OkHttpClient client;
 
     private final HashMap<String, Cookie> cookieStore = new HashMap<>();

@@ -54,10 +54,8 @@ public class InstagramConstants
         String strManufacturer = Build.MANUFACTURER;
         String strDevice = Build.DEVICE;
         String strBoard = Build.BOARD;
-        int sdk_int = Build.VERSION.SDK_INT;
-        String release = Build.VERSION.RELEASE;
 
-        String realUserAgent = String.format("Instagram 10.15.0 Android (%s/%s; %sdpi; %sx%s; %s; %s; %s; %s; en_US)", sdk_int, release, densityDpi, widthPixels, heightPixels, strManufacturer, strModel, strDevice, strBoard);
+        String realUserAgent = String.format("Instagram 10.15.0 Android (%s/%s; %sdpi; %sx%s; %s; %s; %s; %s; en_US)", Build.VERSION.SDK_INT, Build.VERSION.RELEASE, densityDpi, widthPixels, heightPixels, strManufacturer, strModel, strDevice, strBoard);
 
 
         if (strModel == null || strModel.isEmpty() || strManufacturer == null || strManufacturer.isEmpty() || Build.VERSION.RELEASE == null || strDevice.isEmpty() || strBoard == null || strBoard.isEmpty() || realUserAgent.contains("unknown"))
@@ -84,11 +82,11 @@ public class InstagramConstants
         String strModel = getDeviceModel();
 
         String strManufacturer = Build.MANUFACTURER;
-        String strDevice = Build.DEVICE;
+        String strDevice = getDeviceModel();
         String strBoard = Build.BOARD;
-        int sdk_int = Build.VERSION.SDK_INT;
-        String release = Build.VERSION.RELEASE;
-        String strUserAgent = String.format("Instagram 10.15.0 Android (%s/%s; %sdpi; %sx%s; %s; %s; %s; %s; en_US)", sdk_int, release, densityDpi, widthPixels, heightPixels, strManufacturer, strModel, strDevice, strBoard);
+
+
+        String strUserAgent = String.format("Instagram 10.15.0 Android (%s/%s; %sdpi; %sx%s; %s; %s; %s; %s; en_US)", Build.VERSION.SDK_INT, Build.VERSION.RELEASE, densityDpi, widthPixels, heightPixels, strManufacturer, strModel, strDevice, strBoard);
 
         if (strModel == null || strModel.isEmpty() || strManufacturer == null || strManufacturer.isEmpty() || Build.VERSION.RELEASE == null || strDevice.isEmpty() || strBoard == null || strBoard.isEmpty() || strUserAgent.contains("unknown"))
         {
@@ -123,7 +121,7 @@ public class InstagramConstants
         {
             if (random_key != null)
             {
-                return Build.MODEL + random_key;
+                return Build.MODEL + "-" + random_key;
             }
             else
             {
@@ -135,7 +133,7 @@ public class InstagramConstants
             if (random_key != null)
             {
 
-                return DEVICE_MODEL + random_key;
+                return DEVICE_MODEL + "-" + random_key;
             }
             else
             {
