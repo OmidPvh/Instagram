@@ -66,12 +66,13 @@ public class InstagramHashUtil
 
     public static String generateDeviceId(String username, String password)
     {
-        String seed = md5hex(username + password);
-        String volatileSeed = "12345";
         if (Instagram.getRandomKey() != null)
         {
-            volatileSeed = Instagram.getRandomKey();
+            password += Instagram.randomKey;
         }
+
+        String seed = md5hex(username + password);
+        String volatileSeed = "12345";
 
         return "android-" + md5hex(seed + volatileSeed).substring(0, 16);
     }
@@ -91,7 +92,6 @@ public class InstagramHashUtil
         }
         return null;
     }
-
 
 
     @SneakyThrows

@@ -42,7 +42,6 @@ public class Instagram
 {
 
     @Getter
-    @Setter
     public static Context context;
 
     @Getter
