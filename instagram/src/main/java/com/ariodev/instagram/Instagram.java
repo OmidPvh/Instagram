@@ -41,8 +41,12 @@ import okhttp3.Response;
 public class Instagram
 {
 
-
+    @Getter
+    @Setter
     public static Context context;
+
+    @Getter
+    @Setter
     public static String randomKey;
 
     @Getter

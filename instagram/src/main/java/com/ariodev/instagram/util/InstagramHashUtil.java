@@ -1,5 +1,6 @@
 package com.ariodev.instagram.util;
 
+import com.ariodev.instagram.Instagram;
 import com.ariodev.instagram.InstagramConstants;
 
 import org.apache.commons.codec.binary.Hex;
@@ -66,7 +67,7 @@ public class InstagramHashUtil
     public static String generateDeviceId(String username, String password)
     {
         String seed = md5hex(username + password);
-        String volatileSeed = "12345";
+        String volatileSeed = Instagram.getRandomKey();
 
         return "android-" + md5hex(seed + volatileSeed).substring(0, 16);
     }
