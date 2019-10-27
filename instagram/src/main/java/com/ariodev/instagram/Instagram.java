@@ -43,6 +43,7 @@ public class Instagram
 
 
     public static Context context;
+    public static String randomKey;
 
     @Getter
     protected String deviceId;
@@ -90,16 +91,17 @@ public class Instagram
      *
      * @param username -> instagram username
      * @param password -> instagram password
-     * @param context -> context you want to login.
+     * @param context  -> context you want to login.
      */
 
     @Builder
-    public Instagram(String username, String password, Context context)
+    public Instagram(String username, String password, String randomKey, Context context)
     {
         super();
         this.username = username;
         this.password = password;
         this.context = context;
+        this.randomKey = randomKey;
     }
 
 

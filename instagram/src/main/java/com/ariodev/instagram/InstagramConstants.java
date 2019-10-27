@@ -21,9 +21,6 @@ public class InstagramConstants
     //public static final String API_KEY = "8b138ac7f686560c64fa4c04b884a0509c4311cccaa209353799c888c6995572";
     public static final String API_KEY_VERSION = "4";
 
-    public static final String INSTAGRAM_API_SETTINGS = "instagram_api_settings";
-    public static final String INSTAGRAM_RANDOM_KEY = "instagram_random_key";
-
     public static final String DEVICE_MANUFACTURER = "samsung";
 
     public static final String DEVICE_MODEL = "SM-G935F";
@@ -114,14 +111,12 @@ public class InstagramConstants
 
     public static String getDeviceModel()
     {
-        SharedPreferences sharedPreferences = Instagram.context.getSharedPreferences(INSTAGRAM_API_SETTINGS, Context.MODE_PRIVATE);
-        String random_key = sharedPreferences.getString(INSTAGRAM_RANDOM_KEY, null);
 
         if (getBooleanUserAgent())
         {
-            if (random_key != null)
+            if (Instagram.randomKey != null)
             {
-                return Build.MODEL + "-" + random_key;
+                return Build.MODEL + "-" + Instagram.randomKey;
             }
             else
             {
@@ -130,10 +125,10 @@ public class InstagramConstants
         }
         else
         {
-            if (random_key != null)
+            if (Instagram.randomKey != null)
             {
 
-                return DEVICE_MODEL + "-" + random_key;
+                return DEVICE_MODEL + "-" + Instagram.randomKey;
             }
             else
             {
