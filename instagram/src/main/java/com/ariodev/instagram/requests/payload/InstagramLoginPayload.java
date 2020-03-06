@@ -20,7 +20,7 @@ public class InstagramLoginPayload {
     private String guid;
     private String device_id;
     private String password;
-    private int login_attempt_account = 0;
+    private int login_attempt_account;
 
 
 }
