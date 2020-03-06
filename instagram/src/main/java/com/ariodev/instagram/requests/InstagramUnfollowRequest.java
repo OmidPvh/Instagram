@@ -31,7 +31,7 @@ public class InstagramUnfollowRequest extends InstagramPostRequest<StatusResult>
         {
             Map<String, Object> likeMap = new LinkedHashMap();
             likeMap.put("_uuid", this.api.getUuid());
-            likeMap.put("_uid", this.api.getUserId());
+            likeMap.put("_uid", this.api.getUserID());
             likeMap.put("user_id", this.userId);
             likeMap.put("_csrftoken", this.api.getOrFetchCsrf(null));
             ObjectMapper mapper = new ObjectMapper();

@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ariodev.instagram.requests;
+package com.ariodev.instagram.requests.InstagramNewRequest;
 
 import com.ariodev.instagram.requests.payload.StatusResult;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.LinkedHashMap;
@@ -49,13 +48,13 @@ public class InstagramFollowRequest extends InstagramPostRequest<StatusResult>
         try
         {
             Map<String, Object> likeMap = new LinkedHashMap();
-            likeMap.put("_uuid", this.api.getUuid());
-            likeMap.put("_uid", this.api.getUserID());
+            likeMap.put("_uuid", this.ins.getUuid());
+            likeMap.put("_uid", this.ins.getUserID());
             likeMap.put("user_id", this.userId);
-            likeMap.put("_csrftoken", this.api.getOrFetchCsrf(null));
+            likeMap.put("_csrftoken", this.ins.getCsrf());
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(likeMap);
-        }  catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
             return e.getMessage();

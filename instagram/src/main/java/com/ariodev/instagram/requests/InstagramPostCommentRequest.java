@@ -21,7 +21,7 @@ public class InstagramPostCommentRequest extends InstagramPostRequest<InstagramP
         {
             Map<String, Object> likeMap = new LinkedHashMap();
             likeMap.put("_uuid", this.api.getUuid());
-            likeMap.put("_uid", this.api.getUserId());
+            likeMap.put("_uid", this.api.getUserID());
             likeMap.put("_csrftoken", this.api.getOrFetchCsrf(null));
             likeMap.put("comment_text", this.commentText);
             ObjectMapper mapper = new ObjectMapper();

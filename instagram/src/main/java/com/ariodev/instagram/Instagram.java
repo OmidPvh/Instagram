@@ -1,6 +1,7 @@
 package com.ariodev.instagram;
 
 import android.content.Context;
+import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
@@ -10,12 +11,13 @@ import com.ariodev.instagram.requests.InstagramGetInboxRequest;
 import com.ariodev.instagram.requests.InstagramGetRecentActivityRequest;
 import com.ariodev.instagram.requests.InstagramLoginRequest;
 import com.ariodev.instagram.requests.InstagramRequest;
-import com.ariodev.instagram.requests.InstagramSyncFeaturesRequest;
 import com.ariodev.instagram.requests.internal.InstagramFetchHeadersRequest;
+import com.ariodev.instagram.requests.internal.InstagramSyncFeaturesRequest;
 import com.ariodev.instagram.requests.payload.InstagramFbLoginPayload;
 import com.ariodev.instagram.requests.payload.InstagramLoginPayload;
 import com.ariodev.instagram.requests.payload.InstagramLoginResult;
-import com.ariodev.instagram.requests.payload.InstagramSyncFeaturesPayload;
+import com.ariodev.instagram.requests.payload.InstagramLoginTwoFactorPayload;
+import com.ariodev.instagram.requests.payload.InstagramLoginTwoFactorRequest;
 import com.ariodev.instagram.util.InstagramGenericUtil;
 import com.ariodev.instagram.util.InstagramHashUtil;
 
@@ -40,16 +42,27 @@ import okhttp3.Response;
 
 public class Instagram
 {
+    String TAG = "Instagram";
 
     @Getter
+    protected String identifier;
+    @Getter
+    protected String verificationCode;
+    @Getter
+    protected String challengeUrl;
+
     public static Context context;
 
     @Getter
-    @Setter
-    public static String randomKey;
+    protected String Csrf;
+
+
+    @Getter
+    protected String cookie;
 
     @Getter
     protected String deviceId;
+
 
     @Getter
     @Setter
@@ -59,16 +72,11 @@ public class Instagram
     @Setter
     public static String password;
 
-    @Getter
-    @Setter
-    private String accessToken;
 
     @Getter
-    @Setter
     protected boolean isLoggedIn;
 
     @Getter
-    @Setter
     private String uuid;
 
     @Getter
@@ -77,17 +85,17 @@ public class Instagram
 
     @Getter
     @Setter
-    private long userId;
+    private long userID;
 
     @Getter
     @Setter
     protected Response lastResponse;
 
     @Getter
-    @Setter
     protected OkHttpClient client;
 
     private final HashMap<String, Cookie> cookieStore = new HashMap<>();
+
 
     /**
      * Input this parameter carefully
@@ -98,30 +106,21 @@ public class Instagram
      */
 
     @Builder
-    public Instagram(String username, String password, String randomKey, Context context)
+    public Instagram(String username, String password, Context context)
     {
         super();
         this.username = username;
         this.password = password;
         this.context = context;
-        this.randomKey = randomKey;
     }
 
 
     public void setup()
     {
 
-        /*
-        if (this.username.length() < 1) {
-            throw new IllegalArgumentException("Username is mandatory.");
-        }
-
-        if (this.password.length() < 1) {
-            throw new IllegalArgumentException("Password is mandatory.");
-        }*/
-
         this.deviceId = InstagramHashUtil.generateDeviceId(username, password);
         this.uuid = InstagramGenericUtil.generateUuid(true);
+
 
         client = new OkHttpClient.Builder().cookieJar(new CookieJar()
         {
@@ -157,6 +156,7 @@ public class Instagram
 
     }
 
+
     public InstagramLoginResult loginFb() throws IOException
     {
 
@@ -166,36 +166,14 @@ public class Instagram
                                                                       .adid(InstagramGenericUtil.generateUuid(false))
                                                                       .device_id(deviceId)
                                                                       .fb_access_token(password)
-                                                                      .phone_id(InstagramGenericUtil.generateUuid(false))
+                                                                      .phone_id(uuid)
                                                                       .waterfall_id(InstagramGenericUtil.generateUuid(false))
                                                                       /*.allow_contacts_sync(true)
                                                                       .big_blue_token(password)*/
                                                                       .build();
 
         InstagramLoginResult loginResult = this.sendRequest(new InstagramFbLoginRequest(loginRequest));
-        if (loginResult.getStatus()
-                       .equalsIgnoreCase("ok"))
-        {
-            System.out.println(cookieStore.toString());
-            this.userId = loginResult.getLogged_in_user()
-                                     .getPk();
-            this.rankToken = this.userId + "_" + this.uuid;
-            this.isLoggedIn = true;
-
-            InstagramSyncFeaturesPayload syncFeatures = InstagramSyncFeaturesPayload.builder()
-                                                                                    ._uuid(uuid)
-                                                                                    ._csrftoken(getOrFetchCsrf(null))
-                                                                                    ._uid(userId)
-                                                                                    .id(userId)
-                                                                                    .experiments(InstagramConstants.DEVICE_EXPERIMENTS)
-                                                                                    .build();
-
-            this.sendRequest(new InstagramSyncFeaturesRequest(syncFeatures));
-            this.sendRequest(new InstagramAutoCompleteUserListRequest());
-            //this.sendRequest(new InstagramTimelineFeedRequest());
-            this.sendRequest(new InstagramGetInboxRequest());
-            this.sendRequest(new InstagramGetRecentActivityRequest());
-        }
+        emulateUserLoggedIn(loginResult);
 
         System.out.println("Hello! --> " + loginResult.toString());
 
@@ -206,43 +184,54 @@ public class Instagram
     public InstagramLoginResult login() throws IOException
     {
 
-        //Log.d("LOGIN", "Logging with user " + username + " and password " + password.replaceAll("[a-zA-Z0-9]", "*"));
 
         InstagramLoginPayload loginRequest = InstagramLoginPayload.builder()
                                                                   .username(username)
                                                                   .password(password)
                                                                   .guid(uuid)
                                                                   .device_id(deviceId)
-                                                                  .phone_id(InstagramGenericUtil.generateUuid(true))
+                                                                  .phone_id(deviceId)
                                                                   .login_attempt_account(0)
                                                                   ._csrftoken(getOrFetchCsrf(null))
                                                                   .build();
 
         InstagramLoginResult loginResult = this.sendRequest(new InstagramLoginRequest(loginRequest));
-        if (loginResult.getStatus()
-                       .equalsIgnoreCase("ok"))
+
+        emulateUserLoggedIn(loginResult);
+
+        if (loginResult.getTwo_factor_info() != null)
         {
-            this.userId = loginResult.getLogged_in_user()
-                                     .getPk();
-            this.rankToken = this.userId + "_" + this.uuid;
-            this.isLoggedIn = true;
-
-            InstagramSyncFeaturesPayload syncFeatures = InstagramSyncFeaturesPayload.builder()
-                                                                                    ._uuid(uuid)
-                                                                                    ._csrftoken(getOrFetchCsrf(null))
-                                                                                    ._uid(userId)
-                                                                                    .id(userId)
-                                                                                    .experiments(com.ariodev.instagram.InstagramConstants.DEVICE_EXPERIMENTS)
-                                                                                    .build();
-
-            this.sendRequest(new InstagramSyncFeaturesRequest(syncFeatures));
-            this.sendRequest(new InstagramAutoCompleteUserListRequest());
-            //this.sendRequest(new InstagramTimelineFeedRequest());
-            this.sendRequest(new InstagramGetInboxRequest());
-            this.sendRequest(new InstagramGetRecentActivityRequest());
+            identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
         }
+        else if (loginResult.getChallenge() != null)
+        {
+            // logic for challenge
+            Log.i(TAG, "Challenge required: " + loginResult.getChallenge());
+        }
+        return loginResult;
+    }
 
+    public InstagramLoginResult login(String verificationCode) throws Exception
+    {
+        if (identifier == null)
+        {
+            login();
+        }
+        InstagramLoginTwoFactorPayload loginRequest = InstagramLoginTwoFactorPayload.builder()
+                                                                                    .username(username)
 
+                                                                                    .verification_code(verificationCode)
+                                                                                    .two_factor_identifier(identifier)
+                                                                                    .password(password)
+                                                                                    .guid(uuid)
+                                                                                    .device_id(deviceId)
+                                                                                    .phone_id(InstagramGenericUtil.generateUuid(true))
+                                                                                    .login_attempt_account(0)
+                                                                                    ._csrftoken(getOrFetchCsrf(null))
+                                                                                    .build();
+        InstagramLoginTwoFactorRequest req = new InstagramLoginTwoFactorRequest(loginRequest);
+        InstagramLoginResult loginResult = this.sendRequest(req);
+        emulateUserLoggedIn(loginResult);
         return loginResult;
     }
 
@@ -301,6 +290,26 @@ public class Instagram
         CookieManager instance = CookieManager.getInstance();
         instance.removeAllCookie();
         instance.setAcceptCookie(true);
+    }
+
+    private void emulateUserLoggedIn(InstagramLoginResult loginResult) throws IOException
+    {
+        if (loginResult.getStatus()
+                       .equalsIgnoreCase("ok"))
+        {
+            this.userID = loginResult.getLogged_in_user()
+                                     .getPk();
+            this.rankToken = this.userID + "_" + this.uuid;
+            this.isLoggedIn = true;
+
+            this.sendRequest(new InstagramSyncFeaturesRequest(false));
+            this.sendRequest(new InstagramAutoCompleteUserListRequest());
+            //            this.sendRequest(new InstagramTimelineFeedRequest());
+            this.sendRequest(new InstagramGetInboxRequest());
+            this.sendRequest(new InstagramGetRecentActivityRequest());
+        }
+
+
     }
 
 }

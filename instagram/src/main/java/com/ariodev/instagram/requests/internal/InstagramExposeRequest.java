@@ -28,8 +28,8 @@ public class InstagramExposeRequest extends InstagramPostRequest<StatusResult> {
 
         Map<String, Object> likeMap = new LinkedHashMap<>();
         likeMap.put("_uuid", api.getUuid());
-        likeMap.put("_uid", api.getUserId());
-        likeMap.put("id", api.getUserId());
+        likeMap.put("_uid", api.getUserID());
+        likeMap.put("id", api.getUserID());
         likeMap.put("_csrftoken", api.getOrFetchCsrf(null));
         likeMap.put("experiment", "ig_android_profile_contextual_feed");
 

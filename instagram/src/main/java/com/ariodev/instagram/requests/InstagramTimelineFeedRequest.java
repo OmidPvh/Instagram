@@ -1,5 +1,7 @@
 package com.ariodev.instagram.requests;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.util.Base64;
 
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class InstagramTimelineFeedRequest extends InstagramRequest<InstagramTime
         return "POST";
     }
 
+
     @Override
     public InstagramTimelineFeedResult execute() throws IOException {
         System.out.println("EXEC CALLED");
@@ -71,7 +74,7 @@ public class InstagramTimelineFeedRequest extends InstagramRequest<InstagramTime
                 .header("Connection", "close")
                 .header("User-Agent", InstagramConstants.getUserAgent())
                 .header("X-Ads-Opt-Out", "0")
-                .header("X-DEVICE-ID",  InstagramHashUtil.generateDeviceId(Instagram.getUsername(), Instagram.getPassword()))
+                .header("X-DEVICE-ID",  this.api.getDeviceId())
                 .header("X-Google-AD-ID",  InstagramHashUtil.generateDeviceId(Instagram.getUsername(), Instagram.getPassword()))
                 .header("X-IG-INSTALLED-APPS", Base64.encodeToString("{\"1\":0,\"2\":0}".getBytes(), Base64.URL_SAFE | Base64.NO_WRAP))
                 .post(body)

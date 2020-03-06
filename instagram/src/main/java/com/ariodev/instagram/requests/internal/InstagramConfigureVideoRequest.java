@@ -66,7 +66,7 @@ public class InstagramConfigureVideoRequest extends InstagramPostRequest<StatusR
 
         likeMap.put("_csrftoken", api.getOrFetchCsrf(null));
         likeMap.put("_uuid", api.getUuid());
-        likeMap.put("_uid", api.getUserId());
+        likeMap.put("_uid", api.getUserID());
         likeMap.put("caption", caption);
 
 

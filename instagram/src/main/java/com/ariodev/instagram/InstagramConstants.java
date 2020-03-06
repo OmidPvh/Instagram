@@ -2,11 +2,12 @@ package com.ariodev.instagram;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+
+import static android.os.Build.MANUFACTURER;
 
 /**
  * Created by root on 08/06/17.
@@ -21,11 +22,13 @@ public class InstagramConstants
     //public static final String API_KEY = "8b138ac7f686560c64fa4c04b884a0509c4311cccaa209353799c888c6995572";
     public static final String API_KEY_VERSION = "4";
 
+
     public static final String DEVICE_MANUFACTURER = "samsung";
 
     public static final String DEVICE_MODEL = "SM-G935F";
 
     public static final String DEVICE_ANDROID_VERSION = "23";
+
 
     public static final String DEVICE_ANDROID_RELEASE = "6.0.1";
 
@@ -46,12 +49,12 @@ public class InstagramConstants
 
         int heightPixels = displayMetrics.heightPixels;
         int widthPixels = displayMetrics.widthPixels;
-        String strModel = getDeviceModel();
+        String strModel = Build.MODEL;
         String strManufacturer = Build.MANUFACTURER;
         String strDevice = Build.DEVICE;
         String strBoard = Build.BOARD;
 
-        String realUserAgent = String.format("Instagram 10.15.0 Android (%s/%s; %sdpi; %sx%s; %s; %s; %s; %s; en_US)", Build.VERSION.SDK_INT, Build.VERSION.RELEASE, densityDpi, widthPixels, heightPixels, strManufacturer, strModel, strDevice, strBoard);
+        String realUserAgent = String.format("Instagram 10.15.0 Android (%s/%s; %sdpi; %sx%s; %s; %s; %s; %s; en_US)", Build.VERSION.SDK_INT, Build.VERSION.RELEASE, densityDpi, widthPixels, heightPixels, MANUFACTURER, strModel, strDevice, strBoard);
 
 
         if (strModel == null || strModel.isEmpty() || strManufacturer == null || strManufacturer.isEmpty() || Build.VERSION.RELEASE == null || strDevice.isEmpty() || strBoard == null || strBoard.isEmpty() || realUserAgent.contains("unknown"))
@@ -74,16 +77,11 @@ public class InstagramConstants
                                           .getDisplayMetrics().densityDpi;
         int heightPixels = displayMetrics.heightPixels;
         int widthPixels = displayMetrics.widthPixels;
-
-        String strModel = getDeviceModel();
-
+        String strModel = Build.MODEL;
         String strManufacturer = Build.MANUFACTURER;
-        String strDevice = getDeviceModel();
+        String strDevice = Build.DEVICE;
         String strBoard = Build.BOARD;
-
-
-        String strUserAgent = String.format("Instagram 10.15.0 Android (%s/%s; %sdpi; %sx%s; %s; %s; %s; %s; en_US)", Build.VERSION.SDK_INT, Build.VERSION.RELEASE, densityDpi, widthPixels, heightPixels, strManufacturer, strModel, strDevice, strBoard);
-
+        String strUserAgent = String.format("Instagram 10.15.0 Android (%s/%s; %sdpi; %sx%s; %s; %s; %s; %s; en_US)", Build.VERSION.SDK_INT, Build.VERSION.RELEASE, densityDpi, widthPixels, heightPixels, MANUFACTURER, strModel, strDevice, strBoard);
         if (strModel == null || strModel.isEmpty() || strManufacturer == null || strManufacturer.isEmpty() || Build.VERSION.RELEASE == null || strDevice.isEmpty() || strBoard == null || strBoard.isEmpty() || strUserAgent.contains("unknown"))
         {
             return false;
@@ -110,17 +108,14 @@ public class InstagramConstants
 
     public static String getDeviceModel()
     {
-
         if (getBooleanUserAgent())
         {
-
             return Build.MODEL;
         }
         else
         {
 
             return DEVICE_MODEL;
-
         }
     }
 

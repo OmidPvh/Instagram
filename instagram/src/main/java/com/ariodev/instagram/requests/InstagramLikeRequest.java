@@ -29,7 +29,7 @@ public class InstagramLikeRequest extends InstagramPostRequest<InstagramLikeResu
 
         Map<String, Object> likeMap = new LinkedHashMap<>();
         likeMap.put("_uuid", api.getUuid());
-        likeMap.put("_uid", api.getUserId());
+        likeMap.put("_uid", api.getUserID());
         likeMap.put("_csrftoken", api.getOrFetchCsrf(null));
         likeMap.put("media_id", mediaId);
 
