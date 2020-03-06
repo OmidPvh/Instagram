@@ -15,7 +15,4 @@ public class InstagramLoginResult extends StatusResult {
     private InstagramLoggedUser logged_in_user;
     private InstagramTwoFactorInfo two_factor_info;
     private InstagramChallenge challenge;
-//    private String error_type;
-//    private String checkpoint_url;
-
 }

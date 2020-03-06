@@ -25,9 +25,7 @@ public class InstagramLoginRequest extends InstagramPostRequest<InstagramLoginRe
     @SneakyThrows
     public String getPayload() {
         ObjectMapper mapper = new ObjectMapper();
-        String payloadJson = mapper.writeValueAsString(payload);
-
-        return payloadJson;
+        return mapper.writeValueAsString(payload);
     }
 
     @Override
