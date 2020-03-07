@@ -1,5 +1,6 @@
 package com.ariodev.instagram;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.webkit.CookieManager;
@@ -42,7 +43,6 @@ import okhttp3.Response;
 
 public class Instagram
 {
-    String TAG = "Instagram";
 
     @Getter
     protected String identifier;
@@ -51,7 +51,9 @@ public class Instagram
     @Getter
     protected String challengeUrl;
 
-    public static Context context;
+
+    @SuppressLint("StaticFieldLeak")
+    static Context context;
 
     @Getter
     protected String Csrf;
@@ -109,9 +111,9 @@ public class Instagram
     public Instagram(String username, String password, Context context)
     {
         super();
-        this.username = username;
-        this.password = password;
-        this.context = context;
+        Instagram.username = username;
+        Instagram.password = password;
+        Instagram.context = context;
     }
 
 
@@ -206,6 +208,7 @@ public class Instagram
         else if (loginResult.getChallenge() != null)
         {
             // logic for challenge
+            String TAG = "Instagram";
             Log.i(TAG, "Challenge required: " + loginResult.getChallenge());
         }
         return loginResult;

@@ -42,7 +42,6 @@ public class InstagramSyncFeaturesRequest extends InstagramPostRequest<Instagram
             likeMap.put("_uuid", api.getUuid());
             likeMap.put("_uid", api.getUserID());
             likeMap.put("_csrftoken", api.getOrFetchCsrf(null));
-            
         }
         
         ObjectMapper mapper = new ObjectMapper();

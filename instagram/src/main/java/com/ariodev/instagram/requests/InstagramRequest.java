@@ -1,10 +1,10 @@
 package com.ariodev.instagram.requests;
 
 import com.ariodev.instagram.Instagram;
+import com.ariodev.instagram.requests.payload.StatusResult;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ariodev.instagram.requests.payload.StatusResult;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,8 @@ import lombok.SneakyThrows;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class InstagramRequest<T> {
+public abstract class InstagramRequest<T>
+{
 
     @Getter
     @Setter
@@ -43,7 +44,8 @@ public abstract class InstagramRequest<T> {
     /**
      * @return the payload
      */
-    public String getPayload() {
+    public String getPayload()
+    {
         return null;
     }
 
@@ -55,37 +57,45 @@ public abstract class InstagramRequest<T> {
 
     /**
      * Process response
+     *
      * @param resultCode Status Code
-     * @param content Content
+     * @param content    Content
      */
     public abstract T parseResult(int resultCode, String content);
 
     /**
      * @return if request must be logged in
      */
-    public boolean requiresLogin() {
+    public boolean requiresLogin()
+    {
         return true;
     }
 
     /**
      * Parses Json into type, considering the status code
+     *
      * @param statusCode HTTP Status Code
-     * @param str Entity content
-     * @param clazz Class
+     * @param str        Entity content
+     * @param clazz      Class
      * @return Result
      */
     @SneakyThrows
-    public <U> U parseJson(int statusCode, String str, Class<U> clazz) {
+    public <U> U parseJson(int statusCode, String str, Class<U> clazz)
+    {
 
-        if (clazz.isAssignableFrom(StatusResult.class)) {
+        if (clazz.isAssignableFrom(StatusResult.class))
+        {
 
             //TODO: implement a better way to handle exceptions
-            if (statusCode == 404) {
+            if (statusCode == 404)
+            {
                 StatusResult result = (StatusResult) clazz.newInstance();
                 result.setStatus("error");
                 result.setMessage("SC_NOT_FOUND");
                 return (U) result;
-            } else if (statusCode == 403) {
+            }
+            else if (statusCode == 403)
+            {
                 StatusResult result = (StatusResult) clazz.newInstance();
                 result.setStatus("error");
                 result.setMessage("SC_FORBIDDEN");
@@ -98,41 +108,49 @@ public abstract class InstagramRequest<T> {
 
     /**
      * Parses Json into type
-     * @param str Entity content
+     *
+     * @param str   Entity content
      * @param clazz Class
      * @return Result
      */
     @SneakyThrows
-    public <U> U parseJson(String str, Class<U> clazz) {
-        //log.info("Reading " + clazz.getSimpleName() + " from " + str);
-        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//        Log.d("HELLO", str);
+    public <U> U parseJson(String str, Class<U> clazz)
+    {
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                                                      .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         return objectMapper.readValue(str, clazz);
     }
 
     /**
      * Parses Json into type
-     * @param is Entity stream
+     *
+     * @param is    Entity stream
      * @param clazz Class
      * @return Result
      */
     @SneakyThrows
-    public T parseJson(InputStream is, Class<T> clazz) {
+    public T parseJson(InputStream is, Class<T> clazz)
+    {
         return this.parseJson(readContent(is), clazz);
     }
 
-    private String readContent(InputStream is) {
+    private String readContent(InputStream is)
+    {
         String ret = "";
-        try {
+        try
+        {
             String line;
             BufferedReader in = new BufferedReader(new InputStreamReader(is));
-            StringBuffer out = new StringBuffer();
+            StringBuilder out = new StringBuilder();
 
-            while ((line = in.readLine()) != null) {
-                out.append(line).append("\r\n");
+            while ((line = in.readLine()) != null)
+            {
+                out.append(line)
+                   .append("\r\n");
             }
             ret = out.toString();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
 
