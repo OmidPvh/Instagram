@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.http.HttpStatus;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import okhttp3.HttpUrl;
+import okhttp3.internal.http.HttpMethod;
 
 /**
  * Created by root on 08/06/17.
@@ -87,22 +91,28 @@ public abstract class InstagramRequest<T>
         {
 
             //TODO: implement a better way to handle exceptions
-            if (statusCode == 404)
+            if (statusCode == HttpStatus.SC_NOT_FOUND)
             {
                 StatusResult result = (StatusResult) clazz.newInstance();
                 result.setStatus("error");
                 result.setMessage("SC_NOT_FOUND");
                 return (U) result;
             }
-            else if (statusCode == 403)
+            else if (statusCode == HttpStatus.SC_FORBIDDEN)
             {
                 StatusResult result = (StatusResult) clazz.newInstance();
                 result.setStatus("error");
                 result.setMessage("SC_FORBIDDEN");
                 return (U) result;
             }
+            else if (statusCode == HttpStatus.SC_METHOD_NOT_ALLOWED)
+            {
+                StatusResult result = (StatusResult) clazz.newInstance();
+                result.setStatus("error");
+                result.setMessage("SC_METHOD_NOT_ALLOWED");
+                return (U) result;
+            }
         }
-
         return parseJson(str, clazz);
     }
 
