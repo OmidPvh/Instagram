@@ -43,14 +43,14 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T>
         //                                               .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), InstagramHashUtil.generateSignature(getPayload())))
         //                                               .build();
 
+        //        .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
         Request request = new Request.Builder().url(InstagramConstants.API_URL + getUrl())
                                                .addHeader("Connection", "close")
                                                .addHeader("Accept", "*/*")
-                                               .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                                                .addHeader("Cookie2", "$Version=1")
                                                .addHeader("Accept-Language", "en-US")
                                                .addHeader("User-Agent", InstagramConstants.getUserAgent())
-                                               .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), InstagramHashUtil.generateSignature(getPayload())))
+                                               .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded;"), InstagramHashUtil.generateSignature(getPayload())))
                                                .build();
 
         Response response = api.getClient()
