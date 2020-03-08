@@ -60,11 +60,13 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T>
         api.setLastResponse(response);
 
         int resultCode = response.code();
+
         String content = null;
         if (response.body() != null)
         {
             content = response.body()
                               .string();
+
         }
         Log.i("InstagramPostRequest", "response: " + response.toString());
         return parseResult(resultCode, content);

@@ -22,6 +22,12 @@ public class StatusResult
     private String error_type;
     private String checkpoint_url;
 
+    private String two_factor_identifier;
+    private String api_path;
+    private Boolean hide_webview_header;
+    private Boolean logout;
+    private Boolean native_flow;
+
     public void setStatus(String status)
     {
         if (status == null)

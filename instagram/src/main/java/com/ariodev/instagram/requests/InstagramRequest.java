@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.http.HttpMessage;
 import org.apache.http.HttpStatus;
 
 import java.io.BufferedReader;
@@ -96,7 +97,9 @@ public abstract class InstagramRequest<T>
                 StatusResult result = (StatusResult) clazz.newInstance();
                 result.setStatus("error");
                 result.setMessage("SC_NOT_FOUND");
+
                 return (U) result;
+
             }
             else if (statusCode == HttpStatus.SC_FORBIDDEN)
             {
@@ -110,6 +113,7 @@ public abstract class InstagramRequest<T>
                 StatusResult result = (StatusResult) clazz.newInstance();
                 result.setStatus("error");
                 result.setMessage("SC_METHOD_NOT_ALLOWED");
+
                 return (U) result;
             }
         }
