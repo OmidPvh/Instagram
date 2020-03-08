@@ -16,7 +16,6 @@ import lombok.SneakyThrows;
 @AllArgsConstructor
 public class InstagramLoginRequest extends InstagramPostRequest<InstagramLoginResult>
 {
-
     private InstagramLoginPayload payload;
 
     @Override
@@ -37,9 +36,6 @@ public class InstagramLoginRequest extends InstagramPostRequest<InstagramLoginRe
     @SneakyThrows
     public InstagramLoginResult parseResult(int statusCode, String content)
     {
-
-        Log.i("InstagramLoginRequest", "parseResult: " + content);
-
         return parseJson(statusCode, content, InstagramLoginResult.class);
     }
 

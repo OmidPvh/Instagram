@@ -50,11 +50,13 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T>
                                                .addHeader("Cookie2", "$Version=1")
                                                .addHeader("Accept-Language", "en-US")
                                                .addHeader("User-Agent", InstagramConstants.getUserAgent())
+                                               .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), InstagramHashUtil.generateSignature(getPayload())))
                                                .build();
 
         Response response = api.getClient()
                                .newCall(request)
                                .execute();
+
         api.setLastResponse(response);
 
         int resultCode = response.code();
