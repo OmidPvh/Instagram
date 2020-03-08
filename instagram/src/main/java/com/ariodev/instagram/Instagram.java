@@ -201,16 +201,19 @@ public class Instagram
 
         emulateUserLoggedIn(loginResult);
 
-        if (loginResult.getTwo_factor_info() != null)
-        {
-            identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
-        }
-        else if (loginResult.getChallenge() != null)
+        //        if (loginResult.getTwo_factor_info() != null)
+        //        {
+        //            identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
+        //        }
+        //        else
+        //
+        if (loginResult.getCheckpoint_url() != null)
         {
             // logic for challenge
-            String TAG = "Instagram";
-            Log.i(TAG, "Challenge required: " + loginResult.getChallenge());
+
+            Log.i("Instagram", "Challenge required: " + loginResult.getCheckpoint_url());
         }
+
         return loginResult;
     }
 
