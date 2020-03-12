@@ -279,6 +279,8 @@ public class Instagram
 
     public <T> T sendRequest(InstagramRequest<T> request) throws IOException
     {
+        Log.i("Instagram4j", "Sending request: " + request.getClass()
+                                                          .getName());
 
         if (!this.isLoggedIn && request.requiresLogin())
         {
@@ -320,6 +322,8 @@ public class Instagram
     }
 
     // 1.2.9 Return to default InstagramLoginResult
+    // 1.2.10 log.i -> Csrf
+    // 1.2.11 log.i -> sendRequest
 
 
 }
