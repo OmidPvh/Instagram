@@ -293,13 +293,13 @@ public class Instagram
         return response;
     }
 
-    public void logout(Context context)
-    {
-        CookieSyncManager.createInstance(context);
-        CookieManager instance = CookieManager.getInstance();
-        instance.removeAllCookie();
-        instance.setAcceptCookie(true);
-    }
+    //    public void logout(Context context)
+    //    {
+    //        CookieSyncManager.createInstance(context);
+    //        CookieManager instance = CookieManager.getInstance();
+    //        instance.removeAllCookie();
+    //        instance.setAcceptCookie(true);
+    //    }
 
     private void emulateUserLoggedIn(InstagramLoginResult loginResult) throws IOException
     {
@@ -324,6 +324,7 @@ public class Instagram
     // 1.2.9 Return to default InstagramLoginResult
     // 1.2.10 log.i -> Csrf
     // 1.2.11 log.i -> sendRequest
+    // 1.2.12 remove logout()
 
 
 }
