@@ -252,6 +252,7 @@ public class Instagram
             cookie = getCsrfCookie(url);
         }
 
+        Log.i("Instagram", "getOrFetchCsrf: " + cookie.value());
         return cookie.value();
 
     }
@@ -317,5 +318,8 @@ public class Instagram
 
 
     }
+
+    // 1.2.9 Return to default InstagramLoginResult
+
 
 }

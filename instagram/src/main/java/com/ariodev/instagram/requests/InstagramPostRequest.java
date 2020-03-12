@@ -67,7 +67,7 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T>
                               .string();
 
         }
-        Log.i("InstagramPostRequest", "response: " + content);
+
         return parseResult(resultCode, content);
     }
 }
