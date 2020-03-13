@@ -23,8 +23,8 @@ android {
 dependencies {
 
 
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'commons-codec:commons-codec:1.10'
