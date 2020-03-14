@@ -248,6 +248,7 @@ public class Instagram
         Cookie cookie = getCsrfCookie(url);
         if (cookie == null)
         {
+            Log.i("Instagram", "getOrFetchCsrf: cookie ->" + null);
             sendRequest(new InstagramFetchHeadersRequest());
             cookie = getCsrfCookie(url);
         }
@@ -279,6 +280,8 @@ public class Instagram
 
     public <T> T sendRequest(InstagramRequest<T> request) throws IOException
     {
+        Log.i("Instagram", "Sending request: " + request.getClass()
+                                                        .getName());
 
         if (!this.isLoggedIn && request.requiresLogin())
         {
