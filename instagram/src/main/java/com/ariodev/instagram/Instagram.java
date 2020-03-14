@@ -248,13 +248,13 @@ public class Instagram
         Cookie cookie = getCsrfCookie(url);
         if (cookie == null)
         {
-            Log.i("Instagram", "getOrFetchCsrf: cookie ->" + null);
             sendRequest(new InstagramFetchHeadersRequest());
             cookie = getCsrfCookie(url);
         }
 
         Log.i("Instagram", "getOrFetchCsrf: " + cookie.value());
-        return cookie.value();
+        //        return cookie.value();
+        return "mFK3r3uPeitQsxjHHJvAXBQ9ErZ8zvWB";
 
     }
 
