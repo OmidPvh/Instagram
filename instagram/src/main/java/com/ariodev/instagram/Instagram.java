@@ -245,14 +245,14 @@ public class Instagram
     public String getOrFetchCsrf(HttpUrl url) throws IOException
     {
 
-        //        Cookie cookie = getCsrfCookie(url);
-        //        if (cookie == null)
-        //        {
-        //            sendRequest(new InstagramFetchHeadersRequest());
-        //            cookie = getCsrfCookie(url);
-        //        }
-        //
-        Log.i("Instagram", "getOrFetchCsrf: " + "mFK3r3uPeitQsxjCHJvAXBQ9ErZ8zvWB");
+        Cookie cookie = getCsrfCookie(url);
+        if (cookie == null)
+        {
+            sendRequest(new InstagramFetchHeadersRequest());
+            cookie = getCsrfCookie(url);
+        }
+
+        Log.i("Instagram", "getOrFetchCsrf: " + cookie.value());
         //        return cookie.value();
         return "mFK3r3uPeitQsxjCHJvAXBQ9ErZ8zvWB";
 
