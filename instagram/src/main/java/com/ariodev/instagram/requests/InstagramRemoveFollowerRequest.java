@@ -49,7 +49,7 @@ public class InstagramRemoveFollowerRequest extends InstagramPostRequest<StatusR
         return parseJson(resultCode, content, StatusResult.class);
     }
 
-    InstagramRemoveFollowerRequest(long userId)
+    public InstagramRemoveFollowerRequest(long userId)
     {
         this.userId = userId;
     }
