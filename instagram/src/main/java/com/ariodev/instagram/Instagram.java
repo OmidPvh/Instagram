@@ -43,26 +43,34 @@ import okhttp3.Response;
 
 public class Instagram
 {
+    @Getter
+    @Setter
+    protected String identifier;
 
     @Getter
-    protected String identifier;
-    @Getter
+    @Setter
     protected String verificationCode;
+
     @Getter
+    @Setter
     protected String challengeUrl;
 
 
-    @SuppressLint("StaticFieldLeak")
+    @Getter
+    @Setter
     static Context context;
 
     @Getter
+    @Setter
     protected String Csrf;
 
 
     @Getter
+    @Setter
     protected String cookie;
 
     @Getter
+    @Setter
     protected String deviceId;
 
 
@@ -76,9 +84,11 @@ public class Instagram
 
 
     @Getter
+    @Setter
     protected boolean isLoggedIn;
 
     @Getter
+    @Setter
     private String uuid;
 
     @Getter
@@ -94,9 +104,12 @@ public class Instagram
     protected Response lastResponse;
 
     @Getter
+    @Setter
     protected OkHttpClient client;
 
-    private final HashMap<String, Cookie> cookieStore = new HashMap<>();
+    @Getter
+    @Setter
+    protected HashMap<String, Cookie> cookieStore = new HashMap<>();
 
 
     /**
