@@ -9,18 +9,20 @@ import java.util.Map;
 
 import okhttp3.HttpUrl;
 
-public class InstagramBlockRequest extends InstagramPostRequest<StatusResult>
+public class InstagramRemoveFollowerRequest extends InstagramPostRequest<StatusResult>
 {
     private long userId;
 
     @Override
-    public String getUrl() {
-        return "friendships/block/" + userId + "/";
+    public String getUrl()
+    {
+        return "friendships/remove_follower/" + userId + "/";
     }
 
 
     @Override
-    public String getPayload() {
+    public String getPayload()
+    {
 
 
         try
@@ -39,16 +41,15 @@ public class InstagramBlockRequest extends InstagramPostRequest<StatusResult>
             e.printStackTrace();
             return e.getMessage();
         }
-
-
     }
 
     @Override
-    public StatusResult parseResult(int resultCode, String content) {
+    public StatusResult parseResult(int resultCode, String content)
+    {
         return parseJson(resultCode, content, StatusResult.class);
     }
 
-    InstagramBlockRequest(long userId)
+    InstagramRemoveFollowerRequest(long userId)
     {
         this.userId = userId;
     }

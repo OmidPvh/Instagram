@@ -1,6 +1,5 @@
 package com.ariodev.instagram;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.webkit.CookieManager;
@@ -129,6 +128,18 @@ public class Instagram
         Instagram.context = context;
     }
 
+    @Builder
+    public Instagram(String username, String password, long userId, String uuid, HashMap<String, Cookie> cookieStore)
+    {
+        super();
+        this.username = username;
+        this.password = password;
+        this.userID = userId;
+        this.uuid = uuid;
+        this.cookieStore = cookieStore;
+        this.isLoggedIn = true;
+    }
+
 
     public void setup()
     {
@@ -190,7 +201,6 @@ public class Instagram
         InstagramLoginResult loginResult = this.sendRequest(new InstagramFbLoginRequest(loginRequest));
         emulateUserLoggedIn(loginResult);
 
-        System.out.println("Hello! --> " + loginResult.toString());
 
         return loginResult;
 
@@ -224,7 +234,7 @@ public class Instagram
         {
             // logic for challenge
 
-            Log.i("Instagram", "Challenge required: " + loginResult.getCheckpoint_url());
+            //            Log.i("Instagram", "Challenge required: " + loginResult.getCheckpoint_url());
         }
 
         return loginResult;
@@ -265,9 +275,9 @@ public class Instagram
             cookie = getCsrfCookie(url);
         }
 
-        Log.i("Instagram", "getOrFetchCsrf: " + cookie.value());
-        //        return cookie.value();
-        return "mFK3r3uPeitQsxjCHJvAXBQ9ErZ8zvWB";
+        //        Log.i("Instagram", "getOrFetchCsrf: " + cookie.value());
+        //        return "mFK3r3uPeitQsxjCHJvAXBQ9ErZ8zvWB";
+        return cookie.value();
 
     }
 
@@ -293,8 +303,6 @@ public class Instagram
 
     public <T> T sendRequest(InstagramRequest<T> request) throws IOException
     {
-        Log.i("Instagram", "Sending request: " + request.getClass()
-                                                        .getName());
 
         if (!this.isLoggedIn && request.requiresLogin())
         {
