@@ -1,7 +1,6 @@
 package com.ariodev.instagram;
 
 import android.content.Context;
-import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
@@ -129,11 +128,21 @@ public class Instagram
     }
 
     @Builder
-    public Instagram(String username, String password, long userId, String uuid, HashMap<String, Cookie> cookieStore)
+    public Instagram(Context context, String Csrf, String verificationCode, String challenge_url, String cookie, OkHttpClient client, String device_id, String identifier, Response lastResponse, String username, String password, long userId, String uuid, HashMap<String, Cookie> cookieStore, String rankToken)
     {
         super();
+        this.challengeUrl = challenge_url;
+        this.verificationCode = verificationCode;
+        this.Csrf = Csrf;
+        this.cookie = cookie;
+        this.deviceId = device_id;
+        this.identifier = identifier;
+        this.lastResponse = lastResponse;
+        this.context = context;
+        this.client = client;
         this.username = username;
         this.password = password;
+        this.rankToken = rankToken;
         this.userID = userId;
         this.uuid = uuid;
         this.cookieStore = cookieStore;
