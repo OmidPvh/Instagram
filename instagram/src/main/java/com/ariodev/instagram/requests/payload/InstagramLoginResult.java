@@ -1,5 +1,7 @@
 package com.ariodev.instagram.requests.payload;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,8 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramLoginResult extends StatusResult
+public class InstagramLoginResult extends StatusResult implements Serializable
 {
     private InstagramLoggedUser logged_in_user;
-
 }

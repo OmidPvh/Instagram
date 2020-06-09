@@ -21,6 +21,7 @@ import com.ariodev.instagram.util.InstagramGenericUtil;
 import com.ariodev.instagram.util.InstagramHashUtil;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,7 @@ import okhttp3.Response;
  * Created by root on 08/06/17.
  */
 
-public class Instagram
+public class Instagram implements Serializable
 {
     @Getter
     @Setter
