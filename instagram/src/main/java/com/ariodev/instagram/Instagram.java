@@ -112,6 +112,7 @@ public class Instagram implements Serializable
 
     public Instagram()
     {
+
     }
 
     /**
