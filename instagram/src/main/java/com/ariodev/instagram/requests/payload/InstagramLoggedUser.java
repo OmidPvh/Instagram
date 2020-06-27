@@ -1,5 +1,7 @@
 package com.ariodev.instagram.requests.payload;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,7 +13,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramLoggedUser {
+public class InstagramLoggedUser implements Serializable
+{
     public String profile_pic_url;
     public boolean allow_contacts_sync;
     public String username;

@@ -113,7 +113,6 @@ public class Instagram implements Serializable
 
     /**
      * Input this parameter carefully
-     *
      * @param username -> instagram username
      * @param password -> instagram password
      * @param context  -> context you want to login.
@@ -126,6 +125,7 @@ public class Instagram implements Serializable
         Instagram.username = username;
         Instagram.password = password;
         Instagram.context = context;
+
     }
 
     @Builder
@@ -135,7 +135,6 @@ public class Instagram implements Serializable
         this.username = username;
         this.password = password;
         this.context = context;
-        this.userID = userId;
         this.uuid = uuid;
         this.cookieStore = cookieStore;
         this.isLoggedIn = true;
@@ -167,6 +166,7 @@ public class Instagram implements Serializable
                 {
                     for (Cookie cookie : cookies)
                     {
+
                         cookieStore.put(cookie.name(), cookie);
                     }
                 }
