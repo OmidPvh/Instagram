@@ -38,7 +38,7 @@ public class InstagramConfigurePhotoRequest extends InstagramPostRequest<Instagr
         likeMap.put("_csrftoken", api.getOrFetchCsrf(null));
         likeMap.put("media_folder", "Instagram");
         likeMap.put("source_type", 4);
-        likeMap.put("_uid", api.getUserID());
+        likeMap.put("_uid", api.getUserId());
         likeMap.put("_uuid", api.getUuid());
         likeMap.put("caption", caption);
         likeMap.put("upload_id", uploadId);

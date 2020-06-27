@@ -30,7 +30,7 @@ public class InstagramCurrentUserRequest extends InstagramPostRequest<InstagramC
 
         Map<String, Object> likeMap = new LinkedHashMap<>();
         likeMap.put("_uuid", api.getUuid());
-        likeMap.put("_uid", api.getUserID());
+        likeMap.put("_uid", api.getUserId());
         likeMap.put("_csrftoken", api.getOrFetchCsrf(null));
 
         ObjectMapper mapper = new ObjectMapper();

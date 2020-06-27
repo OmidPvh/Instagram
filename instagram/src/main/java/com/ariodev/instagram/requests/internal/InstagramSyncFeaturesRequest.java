@@ -40,7 +40,7 @@ public class InstagramSyncFeaturesRequest extends InstagramPostRequest<Instagram
         
         if (!preLogin) {
             likeMap.put("_uuid", api.getUuid());
-            likeMap.put("_uid", api.getUserID());
+            likeMap.put("_uid", api.getUserId());
             likeMap.put("_csrftoken", api.getOrFetchCsrf(null));
         }
         

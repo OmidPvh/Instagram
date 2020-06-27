@@ -16,7 +16,6 @@
 package com.ariodev.instagram.requests;
 
 import com.ariodev.instagram.requests.payload.StatusResult;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.LinkedHashMap;
@@ -50,7 +49,7 @@ public class InstagramFollowRequest extends InstagramPostRequest<StatusResult>
         {
             Map<String, Object> likeMap = new LinkedHashMap();
             likeMap.put("_uuid", this.api.getUuid());
-            likeMap.put("_uid", this.api.getUserID());
+            likeMap.put("_uid", this.api.getUserId());
             likeMap.put("user_id", this.userId);
             likeMap.put("_csrftoken", this.api.getOrFetchCsrf(null));
             ObjectMapper mapper = new ObjectMapper();

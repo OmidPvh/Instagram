@@ -30,7 +30,7 @@ public class InstagramRemoveFollowerRequest extends InstagramPostRequest<StatusR
             HttpUrl httpUrl = HttpUrl.parse(getUrl());
             Map<String, Object> likeMap = new LinkedHashMap<>();
             likeMap.put("_uuid", api.getUuid());
-            likeMap.put("_uid", api.getUserID());
+            likeMap.put("_uid", api.getUserId());
             likeMap.put("user_id", userId);
             likeMap.put("_csrftoken", api.getOrFetchCsrf(httpUrl));
             ObjectMapper mapper = new ObjectMapper();

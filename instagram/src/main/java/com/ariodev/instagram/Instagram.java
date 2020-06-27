@@ -96,7 +96,7 @@ public class Instagram implements Serializable
 
     @Getter
     @Setter
-    private long userID;
+    private long userId;
 
     @Getter
     @Setter
@@ -135,6 +135,7 @@ public class Instagram implements Serializable
         this.username = username;
         this.password = password;
         this.context = context;
+        this.userId = userId;
         this.uuid = uuid;
         this.cookieStore = cookieStore;
         this.isLoggedIn = true;
@@ -337,9 +338,9 @@ public class Instagram implements Serializable
         if (loginResult.getStatus()
                        .equalsIgnoreCase("ok"))
         {
-            this.userID = loginResult.getLogged_in_user()
+            this.userId = loginResult.getLogged_in_user()
                                      .getPk();
-            this.rankToken = this.userID + "_" + this.uuid;
+            this.rankToken = this.userId + "_" + this.uuid;
             this.isLoggedIn = true;
 
             this.sendRequest(new InstagramSyncFeaturesRequest(false));
