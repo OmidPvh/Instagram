@@ -110,18 +110,20 @@ public class Instagram implements Serializable
     @Setter
     protected HashMap<String, Cookie> cookieStore;
 
+
     public Instagram()
     {
 
     }
 
+
     /**
      * Input this parameter carefully
-     *
      * @param username -> instagram username
      * @param password -> instagram password
      * @param context  -> context you want to login.
      */
+
     @Builder
     public Instagram(String username, String password, Context context)
     {
@@ -129,15 +131,16 @@ public class Instagram implements Serializable
         Instagram.username = username;
         Instagram.password = password;
         Instagram.context = context;
+
     }
 
     @Builder
     public Instagram(Context context, String username, String password, long userId, String uuid, HashMap<String, Cookie> cookieStore)
     {
         super();
-        this.username = username;
-        this.password = password;
-        this.context = context;
+        Instagram.username = username;
+        Instagram.password = password;
+        Instagram.context = context;
         this.userId = userId;
         this.uuid = uuid;
         this.cookieStore = cookieStore;
